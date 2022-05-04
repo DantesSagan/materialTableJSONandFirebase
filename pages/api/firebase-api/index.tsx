@@ -48,5 +48,6 @@ const handler = async (
   } else {
     res.status(200).json({ message: 'Success', docId });
   }
+
 };
 export default handler;

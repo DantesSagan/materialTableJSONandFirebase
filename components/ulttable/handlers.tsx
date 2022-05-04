@@ -1,4 +1,3 @@
-import { getBottomNavigationActionUtilityClass } from '@mui/material';
 import { arrayUnion } from 'firebase/firestore';
 
 export default function HandlersTable({

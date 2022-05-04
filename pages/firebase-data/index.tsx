@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   TableContainer,
   Table,
@@ -135,7 +136,7 @@ export default function FirebaseData() {
     sortGTEData,
     sortLTEData,
     sortIDNumData,
-  } = TableApiSort({ setTable });
+  } = TableApiSort({ setTable, table });
 
   async function getDataDB() {
     const response = await fetch('/api/firebase-api');
@@ -263,12 +264,12 @@ export default function FirebaseData() {
   // ? snackArray[0]
   // : snackArray.map(
   //     (item: {
-  //       id: number | null;
-  //       first_name: string | null;
-  //       last_name: string | null;
-  //       email: string | null;
-  //       gender: string | null;
-  //       ip_address: string | null;
+  // id: number | null;
+  // first_name: string | null;
+  // last_name: string | null;
+  // email: string | null;
+  // gender: string | null;
+  // ip_address: string | null;
   //     }) => {
   //       item.id;
   //       item.first_name;

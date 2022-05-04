@@ -76,6 +76,7 @@ export default function BodyTable({
           </Button>
           <TableCell>
             <TextField
+              size='small'
               placeholder='id'
               defaultValue={id}
               onChange={(e) => setID(e.target.value)}
@@ -83,6 +84,7 @@ export default function BodyTable({
           </TableCell>
           <TableCell>
             <TextField
+              size='small'
               placeholder='first_name'
               defaultValue={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -90,6 +92,7 @@ export default function BodyTable({
           </TableCell>
           <TableCell>
             <TextField
+              size='small'
               placeholder='last_name'
               defaultValue={lastName}
               onChange={(e) => setLastName(e.target.value)}
@@ -97,6 +100,7 @@ export default function BodyTable({
           </TableCell>
           <TableCell>
             <TextField
+              size='small'
               placeholder='email'
               defaultValue={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -104,6 +108,7 @@ export default function BodyTable({
           </TableCell>
           <TableCell>
             <TextField
+              size='small'
               placeholder='gender'
               defaultValue={gender}
               onChange={(e) => setGender(e.target.value)}
@@ -111,6 +116,7 @@ export default function BodyTable({
           </TableCell>
           <TableCell>
             <TextField
+              size='small'
               placeholder='ip'
               defaultValue={ip}
               onChange={(e) => setIp(e.target.value)}
@@ -154,16 +160,22 @@ export default function BodyTable({
                 />
               </TableCell>
             )}
+
             {/* FIRST_NAME */}
-            {close ? (
+            {table.docId[row].dataArr.close ? (
               <TableCell key={row}>
-                <Button onClick={() => setClose(!close)}>
+                <Button
+                  onClick={() =>
+                    handleCloseBoolean(false, table.docId[row].dataArr.docID)
+                  }
+                >
                   {table.docId[row].dataArr.first_name}
                 </Button>
               </TableCell>
             ) : (
               <TableCell key={row}>
                 <TextField
+                  size='small'
                   defaultValue={table.docId[row].dataArr.first_name}
                   onChange={(e) => setFirstName(e.target.value)}
                   style={{
@@ -172,109 +184,21 @@ export default function BodyTable({
                   }}
                   InputProps={{
                     endAdornment: (
-                      <Button
-                        onClick={() => {
-                          setClose(!close);
-                          handleEditFirstName(
-                            firstName,
-                            table.docId[row].dataArr.docID
-                          );
-                        }}
-                      >
-                        edit
-                      </Button>
-                    ),
-                  }}
-                />
-              </TableCell>
-            )}
-            {/* LAST_NAME */}
-            {close ? (
-              <TableCell key={row}>
-                <Button onClick={() => setClose(!close)}>
-                  {table.docId[row].dataArr.last_name}
-                </Button>
-              </TableCell>
-            ) : (
-              <TableCell key={row}>
-                <TextField
-                  defaultValue={table.docId[row].dataArr.last_name}
-                  onChange={(e) => setLastName(e.target.value)}
-                  style={{
-                    maxWidth: '200px',
-                    minWidth: '150px',
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <Button
-                        onClick={() => {
-                          setClose(!close);
-                          handleEditLastName(
-                            lastName,
-                            table.docId[row].dataArr.docID
-                          );
-                        }}
-                      >
-                        edit
-                      </Button>
-                    ),
-                  }}
-                />
-              </TableCell>
-            )}
-            {/* EMAIL */}
-            {close ? (
-              <TableCell key={row}>
-                <Button onClick={() => setClose(!close)}>
-                  {table.docId[row].dataArr.email}
-                </Button>
-              </TableCell>
-            ) : (
-              <TableCell key={row}>
-                <TextField
-                  defaultValue={table.docId[row].dataArr.email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={{
-                    maxWidth: '200px',
-                    minWidth: '150px',
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <Button
-                        onClick={() => {
-                          setClose(!close);
-                          handleEditEmail(
-                            email,
-                            table.docId[row].dataArr.docID
-                          );
-                        }}
-                      >
-                        edit
-                      </Button>
-                    ),
-                  }}
-                />
-              </TableCell>
-            )}
-            {/* GENDER */}
-            {close ? (
-              <TableCell key={row}>
-                <Button onClick={() => setClose(!close)}>
-                  {table.docId[row].dataArr.gender}
-                </Button>
-              </TableCell>
-            ) : (
-              <TableCell key={row}>
-                <TextField
-                  defaultValue={table.docId[row].dataArr.gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  style={{
-                    maxWidth: '200px',
-                    minWidth: '150px',
-                  }}
-                  InputProps={{
-                    endAdornment: (
                       <>
+                        <Button
+                          onClick={() => {
+                            handleCloseBoolean(
+                              false,
+                              table.docId[row].dataArr.docID
+                            );
+                            handleEditFirstName(
+                              firstName,
+                              table.docId[row].dataArr.docID
+                            );
+                          }}
+                        >
+                          edit
+                        </Button>
                         <Button
                           style={{
                             maxWidth: '40px',
@@ -290,17 +214,190 @@ export default function BodyTable({
                             )
                           }
                         >
-                          <Button
-                            onClick={() => {
-                              setClose(!close);
-                              handleEditGender(
-                                gender,
-                                table.docId[row].dataArr.docID
-                              );
-                            }}
-                          >
-                            edit
-                          </Button>
+                          -
+                        </Button>
+                      </>
+                    ),
+                  }}
+                />
+              </TableCell>
+            )}
+
+            {/* LAST_NAME */}
+            {table.docId[row].dataArr.close ? (
+              <TableCell key={row}>
+                <Button
+                  onClick={() =>
+                    handleCloseBoolean(false, table.docId[row].dataArr.docID)
+                  }
+                >
+                  {table.docId[row].dataArr.last_name}
+                </Button>
+              </TableCell>
+            ) : (
+              <TableCell key={row}>
+                <TextField
+                  size='small'
+                  defaultValue={table.docId[row].dataArr.last_name}
+                  onChange={(e) => setLastName(e.target.value)}
+                  style={{
+                    maxWidth: '200px',
+                    minWidth: '150px',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <>
+                        <Button
+                          onClick={() => {
+                            handleCloseBoolean(
+                              true,
+                              table.docId[row].dataArr.docID
+                            );
+                            handleEditLastName(
+                              lastName,
+                              table.docId[row].dataArr.docID
+                            );
+                          }}
+                        >
+                          edit
+                        </Button>
+                        <Button
+                          style={{
+                            maxWidth: '40px',
+                            minWidth: '20px',
+                          }}
+                          size='small'
+                          color='error'
+                          variant='contained'
+                          onClick={() =>
+                            handleCloseBoolean(
+                              true,
+                              table.docId[row].dataArr.docID
+                            )
+                          }
+                        >
+                          -
+                        </Button>
+                      </>
+                    ),
+                  }}
+                />
+              </TableCell>
+            )}
+            {/* EMAIL */}
+            {table.docId[row].dataArr.close ? (
+              <TableCell key={row}>
+                <Button
+                  onClick={() =>
+                    handleCloseBoolean(false, table.docId[row].dataArr.docID)
+                  }
+                >
+                  {table.docId[row].dataArr.email}
+                </Button>
+              </TableCell>
+            ) : (
+              <TableCell key={row}>
+                <TextField
+                  size='small'
+                  defaultValue={table.docId[row].dataArr.email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{
+                    maxWidth: '200px',
+                    minWidth: '150px',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <>
+                        <Button
+                          onClick={() => {
+                            handleCloseBoolean(
+                              true,
+                              table.docId[row].dataArr.docID
+                            );
+                            handleEditEmail(
+                              email,
+                              table.docId[row].dataArr.docID
+                            );
+                          }}
+                        >
+                          edit
+                        </Button>
+                        <Button
+                          style={{
+                            maxWidth: '40px',
+                            minWidth: '20px',
+                          }}
+                          size='small'
+                          color='error'
+                          variant='contained'
+                          onClick={() =>
+                            handleCloseBoolean(
+                              true,
+                              table.docId[row].dataArr.docID
+                            )
+                          }
+                        >
+                          -
+                        </Button>
+                      </>
+                    ),
+                  }}
+                />
+              </TableCell>
+            )}
+            {/* GENDER */}
+            {table.docId[row].dataArr.close ? (
+              <TableCell key={row}>
+                <Button
+                  onClick={() =>
+                    handleCloseBoolean(false, table.docId[row].dataArr.docID)
+                  }
+                >
+                  {table.docId[row].dataArr.gender}
+                </Button>
+              </TableCell>
+            ) : (
+              <TableCell key={row}>
+                <TextField
+                  size='small'
+                  defaultValue={table.docId[row].dataArr.gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  style={{
+                    maxWidth: '200px',
+                    minWidth: '150px',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <>
+                        <Button
+                          onClick={() => {
+                            handleCloseBoolean(
+                              true,
+                              table.docId[row].dataArr.docID
+                            );
+                            handleEditGender(
+                              gender,
+                              table.docId[row].dataArr.docID
+                            );
+                          }}
+                        >
+                          edit
+                        </Button>
+                        <Button
+                          style={{
+                            maxWidth: '40px',
+                            minWidth: '20px',
+                          }}
+                          size='small'
+                          color='error'
+                          variant='contained'
+                          onClick={() =>
+                            handleCloseBoolean(
+                              true,
+                              table.docId[row].dataArr.docID
+                            )
+                          }
+                        >
                           -
                         </Button>
                       </>
@@ -324,6 +421,7 @@ export default function BodyTable({
             ) : (
               <TableCell key={row}>
                 <TextField
+                  size='small'
                   defaultValue={table.docId[row].dataArr.ip_address}
                   onChange={(e) => setIp(e.target.value)}
                   style={{

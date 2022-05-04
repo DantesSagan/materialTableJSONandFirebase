@@ -13,7 +13,34 @@ export default function IndexApiTable({
   setLoading,
   table,
   rowTableID,
-}) {
+}): {
+  submitData: (dataArr: {}) => Promise<void>;
+  deleteData: (
+    rowToDelete: string | null,
+    rowDeleteID: number | null
+  ) => Promise<void>;
+  patchFirstName: (
+    first_name: string | null,
+    docIDRow: string | null
+  ) => Promise<void>;
+  patchLastName: (
+    last_name: string | null,
+    docIDRow: string | null
+  ) => Promise<void>;
+  patchEmail: (email: string | null, docIDRow: string | null) => Promise<void>;
+  patchGender: (
+    gender: string | null,
+    docIDRow: string | null
+  ) => Promise<void>;
+  patchIp: (
+    ip_address: string | null,
+    docIDRow: string | null
+  ) => Promise<void>;
+  patchCloseBoolean: (
+    close: boolean | null,
+    docIDRow: string | null
+  ) => Promise<void>;
+} {
   // API POST REQUEST
   const submitData = async (dataArr: {}) => {
     const editRef = doc(firebaseLib.firestore(), 'table', rowTableID);
