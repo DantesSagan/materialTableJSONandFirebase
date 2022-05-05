@@ -614,7 +614,6 @@ export default function FirebaseData() {
             />
             {/* BODY */}
             <BodyTable
-              add={add}
               firstName={firstName}
               lastName={lastName}
               email={email}
@@ -622,31 +621,18 @@ export default function FirebaseData() {
               ip={ip}
               del={del}
               table={table}
-              close={close}
-              sortGTE={sortGTE}
-              defaultSort={defaultSort}
-              snackArray={snackArray}
-              id={id}
-              setId={setId}
-              sortGTEData={sortGTEData}
               setEmail={setEmail}
               setGender={setGender}
               setDel={setDel}
-              setAdd={setAdd}
               setFirstName={setFirstName}
               setLastName={setLastName}
               setIp={setIp}
-              setClose={setClose}
-              setDefaultSort={setDefaultSort}
-              setSortGTE={setSortGTE}
-              handleAdd={handleAdd}
               handleDelete={handleDelete}
               handleEditFirstName={handleEditFirstName}
               handleEditLastName={handleEditLastName}
               handleEditEmail={handleEditEmail}
               handleEditGender={handleEditGender}
               handleEditIp={handleEditIp}
-              getDataDB={getDataDB}
               handleCloseBoolean={handleCloseBoolean}
             />
           </Table>
