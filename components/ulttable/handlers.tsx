@@ -47,7 +47,6 @@ export default function HandlersTable({
     rowToEdit: string | null,
     rowID: string | null
   ) => {
-    setClose(!close);
     getDataDB().then(() =>
       setTimeout(() => {
         setLoading(false);
@@ -57,7 +56,6 @@ export default function HandlersTable({
   };
 
   const handleEditEmail = (rowToEdit: string | null, rowID: string | null) => {
-    setClose(!close);
     getDataDB().then(() =>
       setTimeout(() => {
         setLoading(false);

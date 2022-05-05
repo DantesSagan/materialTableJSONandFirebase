@@ -108,52 +108,49 @@ export default function TableApiSort({ setTable, table }) {
   // API SORT GREATER THAN OR EQUAL {NUMBER} DATA REQUEST
 
   const sortGTEData = async (id: string) => {
-    const response = await fetch(
-      `http://localhost:4000/tableData?id_gte=${id}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    const data = await response.json();
-    console.log(data);
-    setTable(data);
-    return data;
-  };
-
-  // API SORT LOW THAN OR EQUAL {NUMBER} DATA REQUEST
-
-  const sortLTEData = async (id: string) => {
-    const response = await fetch(
-      `http://localhost:4000/tableData?id_lte=${id}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    const data = await response.json();
-    console.log(data);
-    setTable(data);
-    return data;
-  };
-
-  // API SORT BY ID {NUMBER} DATA REQUEST
-
-  const sortIDNumData = async (id: string) => {
-    const response = await fetch(`http://localhost:4000/tableData?id=${id}`, {
-      method: 'GET',
+    const response = await fetch('/api/firebase-sortGTE', {
+      method: 'POST',
+      body: JSON.stringify({ id }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
     const data = await response.json();
     console.log(data);
-    setTable(data);
-    return data;
+
+    return setTable(data);
+  };
+
+  // API SORT LOW THAN OR EQUAL {NUMBER} DATA REQUEST
+
+  const sortLTEData = async (id: string) => {
+    const response = await fetch('/api/firebase-sortLTE', {
+      method: 'POST',
+      body: JSON.stringify({ id }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+
+    return setTable(data);
+  };
+
+  // API SORT BY ID {NUMBER} DATA REQUEST
+
+  const sortIDNumData = async (id: string) => {
+    const response = await fetch('/api/firebase-sortNum', {
+      method: 'POST',
+      body: JSON.stringify({ id }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+
+    return setTable(data);
   };
 
   return {

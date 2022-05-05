@@ -1,15 +1,13 @@
-import {
-  Button,
-  Chip,
-  TableBody,
-  TableCell,
-  TableRow,
-  TextField,
-} from '@mui/material';
-import React, { useState } from 'react';
+import { TableBody, TableRow } from '@mui/material';
+import React, { useId } from 'react';
+import BodyEmail from './membersBT/email';
+import BodyFirstName from './membersBT/first_name';
+import BodyGender from './membersBT/gender';
+import BodyId from './membersBT/id';
+import BodyIpAddress from './membersBT/ip_address';
+import BodyLastName from './membersBT/last_name';
 
 export default function BodyTable({
-  add,
   firstName,
   lastName,
   email,
@@ -17,113 +15,25 @@ export default function BodyTable({
   ip,
   del,
   table,
-  close,
-  defaultSort,
-  sortGTE,
-  sortGTEData,
   setEmail,
   setGender,
   setDel,
-  setAdd,
   setFirstName,
   setLastName,
   setIp,
-  setClose,
-  setDefaultSort,
-  setSortGTE,
-  handleAdd,
   handleDelete,
   handleEditFirstName,
   handleEditLastName,
   handleEditEmail,
   handleEditGender,
   handleEditIp,
-  getDataDB,
-  snackArray,
-  id,
-  setID,
   handleCloseBoolean,
 }) {
+  const ID = useId();
+  console.log(ID);
+
   return (
-    <TableBody>
-      {add ? (
-        <Button
-          onClick={() => {
-            snackArray.pop(0, snackArray.length - 1);
-            setAdd(!add);
-          }}
-          variant='contained'
-          color='success'
-        >
-          Add User
-        </Button>
-      ) : (
-        <TableRow sx={{ padding: '10px' }}>
-          {add ? null : (
-            <Button
-              onClick={() => {
-                snackArray.pop(0, snackArray.length - 1);
-                setAdd(!add);
-              }}
-              variant='contained'
-              color='error'
-            >
-              Close
-            </Button>
-          )}
-          <Button onClick={handleAdd} variant='contained' color='success'>
-            Add
-          </Button>
-          <TableCell>
-            <TextField
-              size='small'
-              placeholder='id'
-              defaultValue={id}
-              onChange={(e) => setID(e.target.value)}
-            />
-          </TableCell>
-          <TableCell>
-            <TextField
-              size='small'
-              placeholder='first_name'
-              defaultValue={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </TableCell>
-          <TableCell>
-            <TextField
-              size='small'
-              placeholder='last_name'
-              defaultValue={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </TableCell>
-          <TableCell>
-            <TextField
-              size='small'
-              placeholder='email'
-              defaultValue={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </TableCell>
-          <TableCell>
-            <TextField
-              size='small'
-              placeholder='gender'
-              defaultValue={gender}
-              onChange={(e) => setGender(e.target.value)}
-            />
-          </TableCell>
-          <TableCell>
-            <TextField
-              size='small'
-              placeholder='ip'
-              defaultValue={ip}
-              onChange={(e) => setIp(e.target.value)}
-            />
-          </TableCell>
-        </TableRow>
-      )}
+    <TableBody id={ID}>
       {Object.keys(table.docId).map((row: any) => {
         return (
           <TableRow
@@ -135,342 +45,67 @@ export default function BodyTable({
             }}
           >
             {/* ID */}
-            {!del ? (
-              <TableCell>
-                <Chip
-                  color='primary'
-                  key={table.docId[row].dataArr.id}
-                  label={table.docId[row].dataArr.id}
-                  onClick={() => setDel(!del)}
-                />
-              </TableCell>
-            ) : (
-              <TableCell>
-                <Chip
-                  color='secondary'
-                  key={table.docId[row].dataArr.id}
-                  label={table.docId[row].dataArr.id}
-                  onClick={() => setDel(!del)}
-                  onDelete={() =>
-                    handleDelete(
-                      table.docId[row].dataArr.docID,
-                      table.docId[row].dataArr.id
-                    )
-                  }
-                />
-              </TableCell>
-            )}
+            <BodyId
+              del={del}
+              ID={ID}
+              table={table}
+              row={row}
+              setDel={setDel}
+              handleDelete={handleDelete}
+            />
 
             {/* FIRST_NAME */}
-            {table.docId[row].dataArr.close ? (
-              <TableCell key={row}>
-                <Button
-                  onClick={() =>
-                    handleCloseBoolean(false, table.docId[row].dataArr.docID)
-                  }
-                >
-                  {table.docId[row].dataArr.first_name}
-                </Button>
-              </TableCell>
-            ) : (
-              <TableCell key={row}>
-                <TextField
-                  size='small'
-                  defaultValue={table.docId[row].dataArr.first_name}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  style={{
-                    maxWidth: '200px',
-                    minWidth: '150px',
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        <Button
-                          onClick={() => {
-                            handleCloseBoolean(
-                              false,
-                              table.docId[row].dataArr.docID
-                            );
-                            handleEditFirstName(
-                              firstName,
-                              table.docId[row].dataArr.docID
-                            );
-                          }}
-                        >
-                          edit
-                        </Button>
-                        <Button
-                          style={{
-                            maxWidth: '40px',
-                            minWidth: '20px',
-                          }}
-                          size='small'
-                          color='error'
-                          variant='contained'
-                          onClick={() =>
-                            handleCloseBoolean(
-                              true,
-                              table.docId[row].dataArr.docID
-                            )
-                          }
-                        >
-                          -
-                        </Button>
-                      </>
-                    ),
-                  }}
-                />
-              </TableCell>
-            )}
+            <BodyFirstName
+              table={table}
+              row={row}
+              ID={ID}
+              firstName={firstName}
+              setFirstName={setFirstName}
+              handleCloseBoolean={handleCloseBoolean}
+              handleEditFirstName={handleEditFirstName}
+            />
 
             {/* LAST_NAME */}
-            {table.docId[row].dataArr.close ? (
-              <TableCell key={row}>
-                <Button
-                  onClick={() =>
-                    handleCloseBoolean(false, table.docId[row].dataArr.docID)
-                  }
-                >
-                  {table.docId[row].dataArr.last_name}
-                </Button>
-              </TableCell>
-            ) : (
-              <TableCell key={row}>
-                <TextField
-                  size='small'
-                  defaultValue={table.docId[row].dataArr.last_name}
-                  onChange={(e) => setLastName(e.target.value)}
-                  style={{
-                    maxWidth: '200px',
-                    minWidth: '150px',
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        <Button
-                          onClick={() => {
-                            handleCloseBoolean(
-                              true,
-                              table.docId[row].dataArr.docID
-                            );
-                            handleEditLastName(
-                              lastName,
-                              table.docId[row].dataArr.docID
-                            );
-                          }}
-                        >
-                          edit
-                        </Button>
-                        <Button
-                          style={{
-                            maxWidth: '40px',
-                            minWidth: '20px',
-                          }}
-                          size='small'
-                          color='error'
-                          variant='contained'
-                          onClick={() =>
-                            handleCloseBoolean(
-                              true,
-                              table.docId[row].dataArr.docID
-                            )
-                          }
-                        >
-                          -
-                        </Button>
-                      </>
-                    ),
-                  }}
-                />
-              </TableCell>
-            )}
+            <BodyLastName
+              table={table}
+              row={row}
+              ID={ID}
+              lastName={lastName}
+              handleCloseBoolean={handleCloseBoolean}
+              setLastName={setLastName}
+              handleEditLastName={handleEditLastName}
+            />
+
             {/* EMAIL */}
-            {table.docId[row].dataArr.close ? (
-              <TableCell key={row}>
-                <Button
-                  onClick={() =>
-                    handleCloseBoolean(false, table.docId[row].dataArr.docID)
-                  }
-                >
-                  {table.docId[row].dataArr.email}
-                </Button>
-              </TableCell>
-            ) : (
-              <TableCell key={row}>
-                <TextField
-                  size='small'
-                  defaultValue={table.docId[row].dataArr.email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={{
-                    maxWidth: '200px',
-                    minWidth: '150px',
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        <Button
-                          onClick={() => {
-                            handleCloseBoolean(
-                              true,
-                              table.docId[row].dataArr.docID
-                            );
-                            handleEditEmail(
-                              email,
-                              table.docId[row].dataArr.docID
-                            );
-                          }}
-                        >
-                          edit
-                        </Button>
-                        <Button
-                          style={{
-                            maxWidth: '40px',
-                            minWidth: '20px',
-                          }}
-                          size='small'
-                          color='error'
-                          variant='contained'
-                          onClick={() =>
-                            handleCloseBoolean(
-                              true,
-                              table.docId[row].dataArr.docID
-                            )
-                          }
-                        >
-                          -
-                        </Button>
-                      </>
-                    ),
-                  }}
-                />
-              </TableCell>
-            )}
+            <BodyEmail
+              table={table}
+              row={row}
+              handleCloseBoolean={handleCloseBoolean}
+              ID={ID}
+              setEmail={setEmail}
+              email={email}
+              handleEditEmail={handleEditEmail}
+            />
             {/* GENDER */}
-            {table.docId[row].dataArr.close ? (
-              <TableCell key={row}>
-                <Button
-                  onClick={() =>
-                    handleCloseBoolean(false, table.docId[row].dataArr.docID)
-                  }
-                >
-                  {table.docId[row].dataArr.gender}
-                </Button>
-              </TableCell>
-            ) : (
-              <TableCell key={row}>
-                <TextField
-                  size='small'
-                  defaultValue={table.docId[row].dataArr.gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  style={{
-                    maxWidth: '200px',
-                    minWidth: '150px',
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        <Button
-                          onClick={() => {
-                            handleCloseBoolean(
-                              true,
-                              table.docId[row].dataArr.docID
-                            );
-                            handleEditGender(
-                              gender,
-                              table.docId[row].dataArr.docID
-                            );
-                          }}
-                        >
-                          edit
-                        </Button>
-                        <Button
-                          style={{
-                            maxWidth: '40px',
-                            minWidth: '20px',
-                          }}
-                          size='small'
-                          color='error'
-                          variant='contained'
-                          onClick={() =>
-                            handleCloseBoolean(
-                              true,
-                              table.docId[row].dataArr.docID
-                            )
-                          }
-                        >
-                          -
-                        </Button>
-                      </>
-                    ),
-                  }}
-                />
-              </TableCell>
-            )}
+            <BodyGender
+              table={table}
+              row={row}
+              ID={ID}
+              gender={gender}
+              setGender={setGender}
+              handleCloseBoolean={handleCloseBoolean}
+              handleEditGender={handleEditGender}
+            />
             {/* IP */}
-            {table.docId[row].dataArr.close ? (
-              <TableCell key={row}>
-                <Button
-                  onClick={() => {
-                    handleCloseBoolean(false, table.docId[row].dataArr.docID);
-                    // setClose(table.docId[row].dataArr.close);
-                  }}
-                >
-                  {table.docId[row].dataArr.ip_address}
-                </Button>
-              </TableCell>
-            ) : (
-              <TableCell key={row}>
-                <TextField
-                  size='small'
-                  defaultValue={table.docId[row].dataArr.ip_address}
-                  onChange={(e) => setIp(e.target.value)}
-                  style={{
-                    maxWidth: '200px',
-                    minWidth: '150px',
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        {' '}
-                        <Button
-                          style={{
-                            maxWidth: '40px',
-                            minWidth: '20px',
-                          }}
-                          size='small'
-                          onClick={() => {
-                            handleCloseBoolean(
-                              true,
-                              table.docId[row].dataArr.docID
-                            );
-                            handleEditIp(ip, table.docId[row].dataArr.docID);
-                          }}
-                        >
-                          +
-                        </Button>
-                        <Button
-                          style={{
-                            maxWidth: '40px',
-                            minWidth: '20px',
-                          }}
-                          size='small'
-                          color='error'
-                          variant='contained'
-                          onClick={() =>
-                            handleCloseBoolean(
-                              true,
-                              table.docId[row].dataArr.docID
-                            )
-                          }
-                        >
-                          -
-                        </Button>
-                      </>
-                    ),
-                  }}
-                />
-              </TableCell>
-            )}
+            <BodyIpAddress
+              table={table}
+              row={row}
+              ID={ID}
+              setIp={setIp}
+              ip={ip}
+              handleCloseBoolean={handleCloseBoolean}
+              handleEditIp={handleEditIp}
+            />
           </TableRow>
         );
       })}

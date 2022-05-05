@@ -5,12 +5,12 @@ import {
   Paper,
   Stack,
   Button,
-  TableRow,
   TextField,
   Box,
   Snackbar,
   LinearProgress,
   CircularProgress,
+  InputLabel,
 } from '@mui/material';
 import IndexApiTable from '../../components/ulttable/api';
 import TableApiSort from '../../components/ulttable/apiSort';
@@ -18,7 +18,7 @@ import BodyTable from '../../components/ulttable/bodytable';
 import HandlersTable from '../../components/ulttable/handlers';
 import HeadTable from '../../components/ulttable/head';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useId } from 'react';
 
 export default function FirebaseData() {
   const [text, setText] = useState('');
@@ -281,6 +281,7 @@ export default function FirebaseData() {
   //   );
 
   console.log(snackArray);
+  const ID = useId();
   return (
     <Stack>
       <Stack display='flex' flexDirection='row'>
@@ -295,6 +296,98 @@ export default function FirebaseData() {
             horizontal: 'center',
           }}
         />
+        <Stack>
+          {add ? (
+            <Button
+              onClick={() => {
+                snackArray.pop(0, snackArray.length - 1);
+                setAdd(!add);
+              }}
+              variant='contained'
+              color='success'
+            >
+              Add User
+            </Button>
+          ) : (
+            <Stack sx={{ padding: '10px' }} display='flex' flexDirection='row'>
+              {add ? null : (
+                <Button
+                  onClick={() => {
+                    snackArray.pop(0, snackArray.length - 1);
+                    setAdd(!add);
+                  }}
+                  variant='contained'
+                  color='error'
+                >
+                  Close
+                </Button>
+              )}
+              <Button onClick={handleAdd} variant='contained' color='success'>
+                Add
+              </Button>
+              <Stack id={ID}>
+                <InputLabel htmlFor={`$${ID} - id`} />
+                <TextField
+                  size='small'
+                  placeholder='id'
+                  id={`$${ID} - id`}
+                  defaultValue={id}
+                  onChange={(e) => setId(e.target.value)}
+                />
+              </Stack>
+              <Stack id={ID}>
+                <InputLabel htmlFor={`$${ID} - First Name`} />
+                <TextField
+                  id={`$${ID} - First Name`}
+                  size='small'
+                  placeholder='first_name'
+                  defaultValue={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </Stack>
+              <Stack id={ID}>
+                <InputLabel htmlFor={`$${ID} - Last Name`} />
+                <TextField
+                  id={`$${ID} - Last Name`}
+                  size='small'
+                  placeholder='last_name'
+                  defaultValue={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </Stack>
+              <Stack id={ID}>
+                <InputLabel htmlFor={`$${ID} - Email`} />
+                <TextField
+                  id={`$${ID} - Email`}
+                  size='small'
+                  placeholder='email'
+                  defaultValue={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Stack>
+              <Stack id={ID}>
+                <InputLabel htmlFor={`$${ID} - Gender`} />
+                <TextField
+                  id={`$${ID} - Gender`}
+                  size='small'
+                  placeholder='gender'
+                  defaultValue={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                />
+              </Stack>
+              <Stack id={ID}>
+                <InputLabel htmlFor={`$${ID} - IP`} />
+                <TextField
+                  id={`$${ID} - IP`}
+                  size='small'
+                  placeholder='ip'
+                  defaultValue={ip}
+                  onChange={(e) => setIp(e.target.value)}
+                />
+              </Stack>
+            </Stack>
+          )}
+        </Stack>
         {/* SORT BY GREATER THAN OR EQUAL TO */}
         <Box>
           {sortGTE ? (
@@ -534,7 +627,7 @@ export default function FirebaseData() {
               defaultSort={defaultSort}
               snackArray={snackArray}
               id={id}
-              setID={setId}
+              setId={setId}
               sortGTEData={sortGTEData}
               setEmail={setEmail}
               setGender={setGender}
