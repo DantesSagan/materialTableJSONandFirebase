@@ -52,11 +52,8 @@ export default function HandlersTable({
     rowToEdit: string | null,
     rowOpen: boolean | null
   ) => {
-    getDataDB().then(() =>
-      setTimeout(() => {
-        setLoadingEmail(false);
-      }, 400)
-    );
+     setLoadingEmail(true);
+     getDataDB().then(() => setLoadingEmail(false));
     patchEmail(rowID, rowToEdit, rowOpen);
   };
 
