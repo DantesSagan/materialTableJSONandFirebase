@@ -103,8 +103,10 @@ export default function FirebaseData() {
   const [snackArray, setSnackArray] = useState<any>([]);
 
   // LOADING
-
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingFN, setLoadingFN] = useState<boolean>(true);
+  const [loadingLN, setLoadingLN] = useState<boolean>(true);
+  const [loadingEmail, setLoadingEmail] = useState<boolean>(true);
 
   const getRandomSymbolAndID = () => {
     var alphanumeric =
@@ -150,8 +152,12 @@ export default function FirebaseData() {
 
   useEffect(() => {
     defaultSort
-      ? getDataDB().then(() => setLoading(false))
-      : getDataDB().then(() => setLoading(true));
+      ? getDataDB().then(() => {
+          setLoading(false);
+        })
+      : getDataDB().then(() => {
+          setLoading(true);
+        });
   }, []);
 
   const {
@@ -163,7 +169,15 @@ export default function FirebaseData() {
     patchGender,
     patchIp,
     patchCloseBoolean,
-  } = IndexApiTable({ getDataDB, setLoading, table, rowTableID });
+  } = IndexApiTable({
+    getDataDB,
+    setLoading,
+    table,
+    rowTableID,
+    setLoadingFN,
+    setLoadingLN,
+    setLoadingEmail,
+  });
 
   const {
     handleEditFirstName,
@@ -177,7 +191,6 @@ export default function FirebaseData() {
   } = HandlersTable({
     close,
     setClose,
-    setTable,
     table,
     firstName,
     lastName,
@@ -192,16 +205,15 @@ export default function FirebaseData() {
     patchCloseBoolean,
     submitData,
     deleteData,
-    snackArray,
     setOpenSnack,
     rowTableID,
     id,
-    setId,
     getDataDB,
     setLoading,
-    loading,
-    setDefaultSort,
-    defaultSort,
+    setLoadingFN,
+    loadingFN,
+    setLoadingLN,
+    setLoadingEmail,
   });
 
   const handleCloseSnack = (
@@ -614,6 +626,10 @@ export default function FirebaseData() {
             />
             {/* BODY */}
             <BodyTable
+              loadingEmail={loadingEmail}
+              loadingLN={loadingLN}
+              loadingFN={loadingFN}
+              loading={loading}
               firstName={firstName}
               lastName={lastName}
               email={email}

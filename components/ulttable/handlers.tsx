@@ -3,7 +3,6 @@ import { arrayUnion } from 'firebase/firestore';
 export default function HandlersTable({
   close,
   setClose,
-  setTable,
   table,
   firstName,
   lastName,
@@ -17,51 +16,48 @@ export default function HandlersTable({
   patchIp,
   submitData,
   deleteData,
-  snackArray,
   setOpenSnack,
   rowTableID,
   id,
-  setId,
   getDataDB,
   setLoading,
-  loading,
-  setDefaultSort,
-  defaultSort,
   patchCloseBoolean,
+  setLoadingFN,
+  loadingFN,
+  setLoadingLN,
+  setLoadingEmail,
 }) {
   const handleEditFirstName = (
-    rowToEdit: string | null,
-    rowID: string | null
+    rowID: string | null,
+    rowToEdit: string[] | null,
+    rowOpen: boolean | null
   ) => {
-    setClose(!close);
-    setLoading(true);
-    getDataDB().then(() =>
-      setTimeout(() => {
-        setLoading(false);
-      }, 400)
-    );
-    patchFirstName(rowToEdit, rowID);
+    setLoadingFN(true);
+    getDataDB().then(() => setLoadingFN(false));
+    patchFirstName(rowID, rowToEdit, rowOpen);
   };
 
   const handleEditLastName = (
+    rowID: string | null,
     rowToEdit: string | null,
-    rowID: string | null
+    rowOpen: boolean | null
+  ) => {
+    setLoadingLN(true);
+    getDataDB().then(() => setLoadingLN(false));
+    patchLastName(rowID, rowToEdit, rowOpen);
+  };
+
+  const handleEditEmail = (
+    rowID: string | null,
+    rowToEdit: string | null,
+    rowOpen: boolean | null
   ) => {
     getDataDB().then(() =>
       setTimeout(() => {
-        setLoading(false);
+        setLoadingEmail(false);
       }, 400)
     );
-    patchLastName(rowToEdit, rowID);
-  };
-
-  const handleEditEmail = (rowToEdit: string | null, rowID: string | null) => {
-    getDataDB().then(() =>
-      setTimeout(() => {
-        setLoading(false);
-      }, 400)
-    );
-    patchEmail(rowToEdit, rowID);
+    patchEmail(rowID, rowToEdit, rowOpen);
   };
 
   const handleEditGender = (rowToEdit: string | null, rowID: string | null) => {
@@ -121,9 +117,9 @@ export default function HandlersTable({
       // } else if (!idIndex) {
       const newData = {
         id: idNum,
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
+        first_name: [firstName, true],
+        last_name: [lastName, true],
+        email: [email, true],
         gender: gender,
         ip_address: ip,
         docID: rowTableID,

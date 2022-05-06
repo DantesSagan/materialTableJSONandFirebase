@@ -13,6 +13,9 @@ export default function IndexApiTable({
   setLoading,
   table,
   rowTableID,
+  setLoadingFN,
+  setLoadingLN,
+  setLoadingEmail,
 }): {
   submitData: (dataArr: {}) => Promise<void>;
   deleteData: (
@@ -20,14 +23,20 @@ export default function IndexApiTable({
     rowDeleteID: number | null
   ) => Promise<void>;
   patchFirstName: (
-    first_name: string | null,
-    docIDRow: string | null
+    docIDRow: string | null,
+    rowFirstName: string | null,
+    rowOpen: boolean | null
   ) => Promise<void>;
   patchLastName: (
-    last_name: string | null,
-    docIDRow: string | null
+    docIDRow: string | null,
+    rowLastName: string | null,
+    rowOpen: boolean | null
   ) => Promise<void>;
-  patchEmail: (email: string | null, docIDRow: string | null) => Promise<void>;
+  patchEmail: (
+    docIDRow: string | null,
+    rowEmail: string | null,
+    rowOpen: boolean | null
+  ) => Promise<void>;
   patchGender: (
     gender: string | null,
     docIDRow: string | null
@@ -42,6 +51,14 @@ export default function IndexApiTable({
   ) => Promise<void>;
 } {
   // API POST REQUEST
+  //  id: number;
+  //   first_name: string[];
+  //   last_name: string[];
+  //   email: string[];
+  //   gender: string;
+  //   ip_address: string;
+  //   docID: string;
+  //   close: boolean;
   const submitData = async (dataArr: {}) => {
     const editRef = doc(firebaseLib.firestore(), 'table', rowTableID);
     // const getDocTodos = await getDocs(
@@ -87,47 +104,53 @@ export default function IndexApiTable({
 
   // API PATCH METHOD FIRST NAME
   const patchFirstName = async (
-    first_name: string | null,
-    docIDRow: string | null
+    docIDRow: string | null,
+    rowFirstName: string | null,
+    rowOpen: boolean | null
   ) => {
     const editRef = doc(firebaseLib.firestore(), 'table', docIDRow);
 
     await updateDoc(editRef, {
-      'dataArr.first_name': first_name,
+      'dataArr.first_name': [rowFirstName, rowOpen],
     }).then(() => {
       console.log(
-        `Changes first_name successfull of ${docIDRow} for ${first_name}`
+        `Changes first_name successfull of ${docIDRow} for ${rowFirstName}`
       );
-      getDataDB().then(() => setLoading(false));
+      getDataDB().then(() => setLoadingFN(true));
     });
   };
 
   // API PATCH METHOD LAST NAME
   const patchLastName = async (
-    last_name: string | null,
-    docIDRow: string | null
+    docIDRow: string | null,
+    rowLastName: string | null,
+    rowOpen: boolean | null
   ) => {
     const editRef = doc(firebaseLib.firestore(), 'table', docIDRow);
 
     await updateDoc(editRef, {
-      'dataArr.last_name': last_name,
+      'dataArr.last_name': [rowLastName, rowOpen],
     }).then(() => {
       console.log(
-        `Changes last_name successfull of ${docIDRow} for ${last_name}`
+        `Changes last_name successfull of ${docIDRow} for ${rowLastName}`
       );
-      getDataDB().then(() => setLoading(false));
+      getDataDB().then(() => setLoadingLN(true));
     });
   };
 
   // API PATCH METHOD EMAIL
-  const patchEmail = async (email: string | null, docIDRow: string | null) => {
+  const patchEmail = async (
+    docIDRow: string | null,
+    rowEmail: string | null,
+    rowOpen: boolean | null
+  ) => {
     const editRef = doc(firebaseLib.firestore(), 'table', docIDRow);
 
     await updateDoc(editRef, {
-      'dataArr.email': email,
+      'dataArr.email': [rowEmail, rowOpen],
     }).then(() => {
-      console.log(`Changes email successfull of ${docIDRow} for ${email}`);
-      getDataDB().then(() => setLoading(false));
+      console.log(`Changes email successfull of ${docIDRow} for ${rowEmail}`);
+      getDataDB().then(() => setLoadingEmail(true));
     });
   };
 

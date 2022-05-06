@@ -1,4 +1,10 @@
-import { TableBody, TableRow } from '@mui/material';
+import {
+  CircularProgress,
+  Stack,
+  TableBody,
+  TableCell,
+  TableRow,
+} from '@mui/material';
 import React, { useId } from 'react';
 import BodyEmail from './membersBT/email';
 import BodyFirstName from './membersBT/first_name';
@@ -8,6 +14,8 @@ import BodyIpAddress from './membersBT/ip_address';
 import BodyLastName from './membersBT/last_name';
 
 export default function BodyTable({
+  loadingFN,
+  loading,
   firstName,
   lastName,
   email,
@@ -28,6 +36,8 @@ export default function BodyTable({
   handleEditGender,
   handleEditIp,
   handleCloseBoolean,
+  loadingLN,
+  loadingEmail,
 }) {
   const ID = useId();
   console.log(ID);
@@ -63,6 +73,7 @@ export default function BodyTable({
               setFirstName={setFirstName}
               handleCloseBoolean={handleCloseBoolean}
               handleEditFirstName={handleEditFirstName}
+              loadingFN={loadingFN}
             />
 
             {/* LAST_NAME */}
@@ -74,6 +85,7 @@ export default function BodyTable({
               handleCloseBoolean={handleCloseBoolean}
               setLastName={setLastName}
               handleEditLastName={handleEditLastName}
+              loadingLN={loadingLN}
             />
 
             {/* EMAIL */}
@@ -85,6 +97,7 @@ export default function BodyTable({
               setEmail={setEmail}
               email={email}
               handleEditEmail={handleEditEmail}
+              loadingEmail={loadingEmail}
             />
             {/* GENDER */}
             <BodyGender
