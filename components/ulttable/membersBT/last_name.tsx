@@ -56,7 +56,7 @@ export default function BodyLastName({
                           handleEditLastName(
                             table.docId[row].dataArr.docID,
                             lastName,
-                            false
+                            true
                           );
                         }}
                       >

@@ -55,7 +55,7 @@ export default function BodyEmail({
                           handleEditEmail(
                             table.docId[row].dataArr.docID,
                             email,
-                            false
+                            true
                           );
                         }}
                       >
@@ -73,7 +73,7 @@ export default function BodyEmail({
                           handleEditEmail(
                             table.docId[row].dataArr.docID,
                             table.docId[row].dataArr.email[0],
-                            false
+                            true
                           )
                         }
                       >
