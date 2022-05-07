@@ -1,4 +1,10 @@
-import { Button, InputLabel, TableCell, TextField } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  InputLabel,
+  TableCell,
+  TextField,
+} from '@mui/material';
 
 export default function BodyGender({
   table,
@@ -6,62 +12,85 @@ export default function BodyGender({
   ID,
   gender,
   setGender,
-  handleCloseBoolean,
   handleEditGender,
+  loadingGender,
 }) {
   return (
     <>
-      {table.docId[row].dataArr.close ? (
-        <TableCell key={row}>
-          <InputLabel htmlFor={`$${ID} - Gender`} />
-          <Button
-            onClick={() =>
-              handleCloseBoolean(false, table.docId[row].dataArr.docID)
-            }
-          >
-            {table.docId[row].dataArr.gender}
-          </Button>
-        </TableCell>
+      {loadingGender ? (
+        <>
+          {table.docId[row].dataArr.gender[1] ? (
+            <TableCell key={row}>
+              <InputLabel htmlFor={`$${ID} - Gender`} />
+              <Button
+                onClick={() =>
+                  handleEditGender(
+                    table.docId[row].dataArr.docID,
+                    table.docId[row].dataArr.gender[0],
+                    false
+                  )
+                }
+              >
+                {table.docId[row].dataArr.gender[0]}
+              </Button>
+            </TableCell>
+          ) : (
+            <TableCell key={row}>
+              <InputLabel htmlFor={`$${ID} - Gender`} />
+              <TextField
+                id={`$${ID} - id`}
+                size='small'
+                defaultValue={table.docId[row].dataArr.gender[0]}
+                onChange={(e) => setGender(e.target.value)}
+                style={{
+                  maxWidth: '200px',
+                  minWidth: '150px',
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <>
+                      <Button
+                        onClick={() => {
+                          handleEditGender(
+                            table.docId[row].dataArr.docID,
+                            gender,
+                            true
+                          );
+                        }}
+                      >
+                        edit
+                      </Button>
+                      <Button
+                        style={{
+                          maxWidth: '40px',
+                          minWidth: '20px',
+                        }}
+                        size='small'
+                        color='error'
+                        variant='contained'
+                        onClick={() =>
+                          handleEditGender(
+                            table.docId[row].dataArr.docID,
+                            table.docId[row].dataArr.gender[0],
+                            true
+                          )
+                        }
+                      >
+                        -
+                      </Button>
+                    </>
+                  ),
+                }}
+              />
+            </TableCell>
+          )}
+        </>
       ) : (
-        <TableCell key={row}>
-          <InputLabel htmlFor={`$${ID} - Gender`} />
-          <TextField
-            id={`$${ID} - id`}
-            size='small'
-            defaultValue={table.docId[row].dataArr.gender}
-            onChange={(e) => setGender(e.target.value)}
-            style={{
-              maxWidth: '200px',
-              minWidth: '150px',
-            }}
-            InputProps={{
-              endAdornment: (
-                <>
-                  <Button
-                    onClick={() => {
-                      handleCloseBoolean(true, table.docId[row].dataArr.docID);
-                      handleEditGender(gender, table.docId[row].dataArr.docID);
-                    }}
-                  >
-                    edit
-                  </Button>
-                  <Button
-                    style={{
-                      maxWidth: '40px',
-                      minWidth: '20px',
-                    }}
-                    size='small'
-                    color='error'
-                    variant='contained'
-                    onClick={() =>
-                      handleCloseBoolean(true, table.docId[row].dataArr.docID)
-                    }
-                  >
-                    -
-                  </Button>
-                </>
-              ),
-            }}
+        <TableCell>
+          <CircularProgress
+            size={'2rem'}
+            color='success'
+            aria-describedby='dialog-description'
           />
         </TableCell>
       )}

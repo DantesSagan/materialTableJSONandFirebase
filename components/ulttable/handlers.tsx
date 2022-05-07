@@ -26,6 +26,8 @@ export default function HandlersTable({
   loadingFN,
   setLoadingLN,
   setLoadingEmail,
+  setLoadingGender,
+  setLoadingIP,
 }) {
   const handleEditFirstName = (
     rowID: string | null,
@@ -52,27 +54,29 @@ export default function HandlersTable({
     rowToEdit: string | null,
     rowOpen: boolean | null
   ) => {
-     setLoadingEmail(true);
-     getDataDB().then(() => setLoadingEmail(false));
+    setLoadingEmail(true);
+    getDataDB().then(() => setLoadingEmail(false));
     patchEmail(rowID, rowToEdit, rowOpen);
   };
 
-  const handleEditGender = (rowToEdit: string | null, rowID: string | null) => {
-    getDataDB().then(() =>
-      setTimeout(() => {
-        setLoading(false);
-      }, 400)
-    );
-    patchGender(rowToEdit, rowID);
+  const handleEditGender = (
+    rowID: string | null,
+    rowToEdit: string | null,
+    rowOpen: boolean | null
+  ) => {
+    setLoadingGender(true);
+    getDataDB().then(() => setLoadingGender(false));
+    patchGender(rowID, rowToEdit, rowOpen);
   };
 
-  const handleEditIp = (rowToEdit: string | null, rowID: string | null) => {
-    getDataDB().then(() =>
-      setTimeout(() => {
-        setLoading(false);
-      }, 400)
-    );
-    patchIp(rowToEdit, rowID);
+  const handleEditIp = (
+    rowID: string | null,
+    rowToEdit: string | null,
+    rowOpen: boolean | null
+  ) => {
+    setLoadingIP(true);
+    getDataDB().then(() => setLoadingIP(false));
+    patchIp(rowID, rowToEdit, rowOpen);
   };
 
   const handleCloseBoolean = (
@@ -117,8 +121,8 @@ export default function HandlersTable({
         first_name: [firstName, true],
         last_name: [lastName, true],
         email: [email, true],
-        gender: gender,
-        ip_address: ip,
+        gender: [gender, true],
+        ip_address: [ip, true],
         docID: rowTableID,
         close: true,
       };

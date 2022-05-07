@@ -15,15 +15,10 @@ const handler = async (
   }
 ) => {
   if (req.method === 'POST') {
-    const id = req.body.id;
+    const limitNumber = req.body.limitNumber;
     const sortRef = collection(firebaseLib.firestore(), 'table');
 
-    const q = query(
-      sortRef,
-      where('dataArr.id', '>=', id),
-      orderBy('dataArr.id'),
-      limit(10)
-    );
+    const q = query(sortRef, orderBy('dataArr.id', 'asc'), limit(limitNumber));
 
     const docId = await getDocs(q)
       .then((querySnap) => {

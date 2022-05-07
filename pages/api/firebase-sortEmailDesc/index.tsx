@@ -1,4 +1,4 @@
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { firebaseLib } from '../../../components/firebaseLib/firebase';
 
 const handler = async (
@@ -16,7 +16,7 @@ const handler = async (
 ) => {
   const sortRef = collection(firebaseLib.firestore(), 'table');
 
-  const q = query(sortRef, orderBy('dataArr.email', 'desc'));
+  const q = query(sortRef, orderBy('dataArr.email', 'desc'), limit(10));
 
   const docId = await getDocs(q)
     .then((querySnap) => {

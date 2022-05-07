@@ -16,6 +16,8 @@ export default function IndexApiTable({
   setLoadingFN,
   setLoadingLN,
   setLoadingEmail,
+  setLoadingGender,
+  setLoadingIP,
 }): {
   submitData: (dataArr: {}) => Promise<void>;
   deleteData: (
@@ -38,12 +40,14 @@ export default function IndexApiTable({
     rowOpen: boolean | null
   ) => Promise<void>;
   patchGender: (
-    gender: string | null,
-    docIDRow: string | null
+    docIDRow: string | null,
+    rowGender: string | null,
+    rowOpen: boolean | null
   ) => Promise<void>;
   patchIp: (
-    ip_address: string | null,
-    docIDRow: string | null
+    docIDRow: string | null,
+    rowIP: string | null,
+    rowOpen: boolean | null
   ) => Promise<void>;
   patchCloseBoolean: (
     close: boolean | null,
@@ -156,33 +160,33 @@ export default function IndexApiTable({
 
   // API PATCH METHOD GENDER
   const patchGender = async (
-    gender: string | null,
-    docIDRow: string | null
+    docIDRow: string | null,
+    rowGender: string | null,
+    rowOpen: boolean | null
   ) => {
     const editRef = doc(firebaseLib.firestore(), 'table', docIDRow);
 
     await updateDoc(editRef, {
-      'dataArr.gender': gender,
+      'dataArr.gender': [rowGender, rowOpen],
     }).then(() => {
-      console.log(`Changes gender successfull of ${docIDRow} for ${gender}`);
-      getDataDB().then(() => setLoading(false));
+      console.log(`Changes gender successfull of ${docIDRow} for ${rowGender}`);
+      getDataDB().then(() => setLoadingGender(true));
     });
   };
 
   // API PATCH METHOD IP
   const patchIp = async (
-    ip_address: string | null,
-    docIDRow: string | null
+    docIDRow: string | null,
+    rowIP: string | null,
+    rowOpen: boolean | null
   ) => {
     const editRef = doc(firebaseLib.firestore(), 'table', docIDRow);
 
     await updateDoc(editRef, {
-      'dataArr.ip_address': ip_address,
+      'dataArr.ip_address': [rowIP, rowOpen],
     }).then(() => {
-      console.log(
-        `Changes ip_address successfull of ${docIDRow} for ${ip_address}`
-      );
-      getDataDB().then(() => setLoading(false));
+      console.log(`Changes ip_address successfull of ${docIDRow} for ${rowIP}`);
+      getDataDB().then(() => setLoadingIP(true));
     });
   };
 

@@ -31,6 +31,8 @@ const handler = async (
   const docId = await firebaseLib
     .firestore()
     .collection('table')
+    .orderBy('dataArr')
+    .limit(10)
     .get()
     .then((serverUpdate) => {
       let todolist: any[] = [];
@@ -48,6 +50,5 @@ const handler = async (
   } else {
     res.status(200).json({ message: 'Success', docId });
   }
-
 };
 export default handler;

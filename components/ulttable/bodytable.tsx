@@ -38,6 +38,8 @@ export default function BodyTable({
   handleCloseBoolean,
   loadingLN,
   loadingEmail,
+  loadingGender,
+  loadingIP,
 }) {
   const ID = useId();
   console.log(ID);
@@ -106,8 +108,8 @@ export default function BodyTable({
               ID={ID}
               gender={gender}
               setGender={setGender}
-              handleCloseBoolean={handleCloseBoolean}
               handleEditGender={handleEditGender}
+              loadingGender={loadingGender}
             />
             {/* IP */}
             <BodyIpAddress
@@ -116,8 +118,8 @@ export default function BodyTable({
               ID={ID}
               setIp={setIp}
               ip={ip}
-              handleCloseBoolean={handleCloseBoolean}
               handleEditIp={handleEditIp}
+              loadingIP={loadingIP}
             />
           </TableRow>
         );

@@ -1,4 +1,10 @@
-import { Button, InputLabel, TableCell, TextField } from '@mui/material';
+import {
+  Button,
+  InputLabel,
+  TableCell,
+  TextField,
+  CircularProgress,
+} from '@mui/material';
 import React from 'react';
 
 export default function BodyIpAddress({
@@ -7,69 +13,92 @@ export default function BodyIpAddress({
   ID,
   setIp,
   ip,
-  handleCloseBoolean,
   handleEditIp,
+  loadingIP,
 }) {
   return (
     <>
-      {table.docId[row].dataArr.close ? (
-        <TableCell key={row}>
-          <InputLabel htmlFor={`$${ID} - IP`} />
-          <Button
-            onClick={() => {
-              handleCloseBoolean(false, table.docId[row].dataArr.docID);
-              // setClose(table.docId[row].dataArr.close);
-            }}
-          >
-            {table.docId[row].dataArr.ip_address}
-          </Button>
-        </TableCell>
+      {loadingIP ? (
+        <>
+          {table.docId[row].dataArr.ip_address[1] ? (
+            <TableCell key={row}>
+              <InputLabel htmlFor={`$${ID} - IP`} />
+              <Button
+                onClick={() => {
+                  handleEditIp(
+                    table.docId[row].dataArr.docID,
+                    table.docId[row].dataArr.ip_address[0],
+                    false
+                  );
+                  // setClose(table.docId[row].dataArr.close);
+                }}
+              >
+                {table.docId[row].dataArr.ip_address[0]}
+              </Button>
+            </TableCell>
+          ) : (
+            <TableCell key={row}>
+              <InputLabel htmlFor={`$${ID} - IP`} />
+              <TextField
+                id={`$${ID} - id`}
+                size='small'
+                defaultValue={table.docId[row].dataArr.ip_address[0]}
+                onChange={(e) => setIp(e.target.value)}
+                style={{
+                  maxWidth: '200px',
+                  minWidth: '150px',
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <>
+                      {' '}
+                      <Button
+                        style={{
+                          maxWidth: '40px',
+                          minWidth: '20px',
+                        }}
+                        size='small'
+                        onClick={() => {
+                          handleEditIp(
+                            table.docId[row].dataArr.docID,
+                            ip,
+                            true
+                          );
+                        }}
+                      >
+                        +
+                      </Button>
+                      <Button
+                        style={{
+                          maxWidth: '40px',
+                          minWidth: '20px',
+                        }}
+                        size='small'
+                        color='error'
+                        variant='contained'
+                        onClick={() =>
+                          handleEditIp(
+                            table.docId[row].dataArr.docID,
+                            table.docId[row].dataArr.ip_address[0],
+                            true
+                          )
+                        }
+                      >
+                        -
+                      </Button>
+                    </>
+                  ),
+                }}
+              />
+            </TableCell>
+          )}
+        </>
       ) : (
-        <TableCell key={row}>
-          <InputLabel htmlFor={`$${ID} - IP`} />
-          <TextField
-            id={`$${ID} - id`}
-            size='small'
-            defaultValue={table.docId[row].dataArr.ip_address}
-            onChange={(e) => setIp(e.target.value)}
-            style={{
-              maxWidth: '200px',
-              minWidth: '150px',
-            }}
-            InputProps={{
-              endAdornment: (
-                <>
-                  {' '}
-                  <Button
-                    style={{
-                      maxWidth: '40px',
-                      minWidth: '20px',
-                    }}
-                    size='small'
-                    onClick={() => {
-                      handleCloseBoolean(true, table.docId[row].dataArr.docID);
-                      handleEditIp(ip, table.docId[row].dataArr.docID);
-                    }}
-                  >
-                    +
-                  </Button>
-                  <Button
-                    style={{
-                      maxWidth: '40px',
-                      minWidth: '20px',
-                    }}
-                    size='small'
-                    color='error'
-                    variant='contained'
-                    onClick={() =>
-                      handleCloseBoolean(true, table.docId[row].dataArr.docID)
-                    }
-                  >
-                    -
-                  </Button>
-                </>
-              ),
-            }}
+        <TableCell>
+          <CircularProgress
+            size={'2rem'}
+            color='success'
+            aria-describedby='dialog-description'
           />
         </TableCell>
       )}

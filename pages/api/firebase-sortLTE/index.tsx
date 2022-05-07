@@ -1,4 +1,4 @@
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore';
 import { firebaseLib } from '../../../components/firebaseLib/firebase';
 
 const handler = async (
@@ -21,7 +21,8 @@ const handler = async (
     const q = query(
       sortRef,
       where('dataArr.id', '<=', id),
-      orderBy('dataArr.id')
+      orderBy('dataArr.id'),
+      limit(10)
     );
 
     const docId = await getDocs(q)

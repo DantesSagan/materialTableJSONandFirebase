@@ -66,6 +66,7 @@ export default function FirebaseData() {
   const [id, setId] = useState<string | null>(null);
   const [idLTE, setIdLTE] = useState<string | null>(null);
   const [idNum, setIdNum] = useState<string | null>(null);
+  const [limitIdNum, setLimitIdNum] = useState<string | null>(null);
 
   // SORT BOOLEAN
   const [defaultSort, setDefaultSort] = useState<boolean>(true);
@@ -78,6 +79,7 @@ export default function FirebaseData() {
   const [sortGTE, setSortGTE] = useState<boolean>(true);
   const [sortLTE, setSortLTE] = useState<boolean>(true);
   const [sortNum, setSortNum] = useState<boolean>(true);
+  const [sortLimit, setSortLimit] = useState<boolean>(true);
 
   // ANCHOR and OPEN logic with using statements
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -107,6 +109,8 @@ export default function FirebaseData() {
   const [loadingFN, setLoadingFN] = useState<boolean>(true);
   const [loadingLN, setLoadingLN] = useState<boolean>(true);
   const [loadingEmail, setLoadingEmail] = useState<boolean>(true);
+  const [loadingGender, setLoadingGender] = useState<boolean>(true);
+  const [loadingIP, setLoadingIP] = useState<boolean>(true);
 
   const getRandomSymbolAndID = () => {
     var alphanumeric =
@@ -138,6 +142,7 @@ export default function FirebaseData() {
     sortGTEData,
     sortLTEData,
     sortIDNumData,
+    sortLimitNumber,
   } = TableApiSort({ setTable, table });
 
   async function getDataDB() {
@@ -177,6 +182,8 @@ export default function FirebaseData() {
     setLoadingFN,
     setLoadingLN,
     setLoadingEmail,
+    setLoadingGender,
+    setLoadingIP,
   });
 
   const {
@@ -214,6 +221,8 @@ export default function FirebaseData() {
     loadingFN,
     setLoadingLN,
     setLoadingEmail,
+    setLoadingGender,
+    setLoadingIP,
   });
 
   const handleCloseSnack = (
@@ -545,6 +554,50 @@ export default function FirebaseData() {
             Default sort
           </Button>
         </Box>
+        {/* LIMITATION SORT */}
+        <Box>
+          {sortLimit ? (
+            <Button
+              color='success'
+              variant='contained'
+              onClick={() => {
+                snackArray.pop(0, snackArray.length - 1);
+                setSortLimit(!sortLimit);
+              }}
+            >
+              Sort Limit
+            </Button>
+          ) : (
+            <Box display={'flex'} flexDirection='column'>
+              <TextField
+                type='number'
+                placeholder='Sort by id'
+                onChange={(e) => setLimitIdNum(e.target.value)}
+              />
+              <Button
+                color='success'
+                variant='contained'
+                onClick={() => {
+                  snackArray.push(limitIdNum);
+                  setSortLimit(!sortLimit);
+                  sortLimitNumber(limitIdNum);
+                  setOpenSnack(true);
+                }}
+              >
+                Toggle
+              </Button>
+              <Button
+                color='error'
+                variant='contained'
+                onClick={() => {
+                  setSortLimit(!sortLimit);
+                }}
+              >
+                Cancel
+              </Button>
+            </Box>
+          )}
+        </Box>
       </Stack>{' '}
       {loading ? (
         <Stack alignItems='center'>
@@ -626,6 +679,8 @@ export default function FirebaseData() {
             />
             {/* BODY */}
             <BodyTable
+              loadingIP={loadingIP}
+              loadingGender={loadingGender}
               loadingEmail={loadingEmail}
               loadingLN={loadingLN}
               loadingFN={loadingFN}

@@ -61,6 +61,7 @@ export default function HeadTable({
   setSortIP,
   sortIPDescData,
   sortIPAscData,
+  
 }) {
   return (
     <TableHead>

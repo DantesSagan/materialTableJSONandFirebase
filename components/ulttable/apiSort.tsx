@@ -153,6 +153,22 @@ export default function TableApiSort({ setTable, table }) {
     return setTable(data);
   };
 
+  // API SORT BY LIMITATION NUMBER OF DISPLAYED ROW DATA
+
+  const sortLimitNumber = async (limitNumber: string | null) => {
+    const response = await fetch('/api/firebase-sortLimit', {
+      method: 'POST',
+      body: JSON.stringify({ limitNumber }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+
+    return setTable(data);
+  };
+
   return {
     sortIDAscData,
     sortIDDescData,
@@ -169,5 +185,6 @@ export default function TableApiSort({ setTable, table }) {
     sortGTEData,
     sortLTEData,
     sortIDNumData,
+    sortLimitNumber,
   };
 }
